@@ -1,7 +1,7 @@
 {
   "name": "supernova-baileys",
   "type": "module",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Supernova/baileys: fork do Baileys (WhatsApp Web) com chamadas de voz e vídeo (H.264)",
   "homepage": "https://www.instagram.com/itz_d4m0cl3s/",
   "keywords": [
