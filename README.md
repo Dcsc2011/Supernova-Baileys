@@ -6,6 +6,7 @@
 
 > v1.2.0: nova identidade **Supernova/baileys**, código de terceiros removido e auditado, **chamadas de vídeo** (envio de H.264 dentro da chamada) e documentação completa. Veja o [Changelog](#changelog).
 
+[![NPM](https://img.shields.io/npm/v/supernova-baileys?color=7c3aed&style=flat-square&label=npm)](https://www.npmjs.com/package/supernova-baileys)
 [![GitHub](https://img.shields.io/badge/github-Dcsc2011%2FSupernova--Baileys-7c3aed?style=flat-square&logo=github)](https://github.com/Dcsc2011/Supernova-Baileys)
 [![License](https://img.shields.io/badge/license-MIT-6366f1?style=flat-square)](LICENSE)
 [![Author](https://img.shields.io/badge/by-itz__d4m0cl3s-ec4899?style=flat-square)](https://www.instagram.com/itz_d4m0cl3s/)
@@ -18,22 +19,29 @@
 
 ## Instalação
 
-Direto do repositório GitHub:
+Pelo NPM (recomendado):
 
 ```bash
-npm i github:Dcsc2011/Supernova-Baileys
+npm i supernova-baileys
 ```
 
 Ou usando Yarn / Pnpm:
 ```bash
-yarn add github:Dcsc2011/Supernova-Baileys
+yarn add supernova-baileys
 # ou
-pnpm add github:Dcsc2011/Supernova-Baileys
+pnpm add supernova-baileys
+```
+
+Também é possível instalar direto do GitHub:
+```bash
+npm i github:Dcsc2011/Supernova-Baileys
 ```
 
 No código:
 ```javascript
-import makeWASocket from '@supernova/baileys'
+import makeWASocket from 'supernova-baileys'
+// ou CommonJS:
+const { default: makeWASocket } = require('supernova-baileys')
 ```
 
 Dependências opcionais (só se for usar o recurso específico):
