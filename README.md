@@ -31,6 +31,11 @@ yarn add github:Dcsc2011/Supernova-Baileys
 pnpm add github:Dcsc2011/Supernova-Baileys
 ```
 
+No código:
+```javascript
+import makeWASocket from '@supernova/baileys'
+```
+
 Dependências opcionais (só se for usar o recurso específico):
 ```bash
 npm i sharp          # sticker pack a partir de imagem que não é webp (jimp não codifica webp)
