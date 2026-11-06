@@ -99,7 +99,7 @@ const {
     DisconnectReason,
     Browsers,
     getBestWaVersion
-} = require('@supernova/baileys')
+} = require('supernova-baileys')
 
 const { state, saveCreds } = await useMultiFileAuthState('./session')
 const { version, isLatest, source } = await getBestWaVersion()
@@ -314,7 +314,7 @@ await sock.sendMessage(jid, {
 await sock.sendMessage(jid, {
     poll: { name: 'Pergunta?', values: ['A', 'B', 'C'], selectableCount: 1 }
 })
-const { generateForwardMessageContent, generateWAMessageFromContent } = require('@supernova/baileys')
+const { generateForwardMessageContent, generateWAMessageFromContent } = require('supernova-baileys')
 const fwd = generateForwardMessageContent(message, false)
 const msg = generateWAMessageFromContent(jid, fwd, { quoted: m })
 await sock.relayMessage(jid, msg.message, { messageId: msg.key.id })
@@ -325,7 +325,7 @@ await sock.relayMessage(jid, msg.message, { messageId: msg.key.id })
 ## 4. Botões e interativos
 
 ```js
-const { generateWAMessageFromContent, proto } = require('@supernova/baileys')
+const { generateWAMessageFromContent, proto } = require('supernova-baileys')
 
 const msg = generateWAMessageFromContent(jid, {
     viewOnceMessage: {
@@ -424,7 +424,7 @@ await sock.sendMessage(jid, {
 ```js
 await sock.sendMessage('120363...@newsletter', { text: 'Novidade!' })
 
-const { generateWAMessage, generateMessageIDV2 } = require('@supernova/baileys')
+const { generateWAMessage, generateMessageIDV2 } = require('supernova-baileys')
 const fullMsg = await generateWAMessage(canalJid, { image: buffer, caption: 'Legenda' }, {
     upload: sock.waUploadToServer, userJid: sock.user.id,
     messageId: generateMessageIDV2(sock.user.id),
@@ -456,7 +456,7 @@ const {
     downloadContentFromMessage,
     generateWAMessage,
     generateMessageIDV2,
-} = require('@supernova/baileys')
+} = require('supernova-baileys')
 
 const canalJid = '120363...@newsletter'
 const q        = quotedMsg          // a mensagem citada
@@ -521,7 +521,7 @@ await sock.sendMessage(jid, {
     poll: { name: 'Pergunta?', values: ['A', 'B', 'C'], selectableCount: 1 }
 })
 
-const { getAggregateVotesInPollMessage } = require('@supernova/baileys/lib/Utils/messages.js')
+const { getAggregateVotesInPollMessage } = require('supernova-baileys/lib/Utils/messages.js')
 sock.ev.on('messages.update', async (updates) => {
     for (const { key, update } of updates) {
         if (!update.pollUpdates) continue
@@ -542,7 +542,7 @@ sock.ev.on('messages.update', async (updates) => {
 ```js
 await sock.sendRich(jid, [
     sock.makeText('Acesse [nosso site](https://example.com).'),
-    sock.makeCode('bash', 'npm i github:Dcsc2011/Supernova-Baileys'),
+    sock.makeCode('bash', 'npm i supernova-baileys'),
     sock.makeTable([['Nome', 'Status'], ['Botões', '✅']]),
     sock.makeList(['Item 1', 'Item 2']),
 ], quotedMsg, ['RICH_RESPONSE_CODE', 'RICH_RESPONSE_TABLE'])
@@ -567,7 +567,7 @@ const {
     lidToJid, resolveJid, resolveAll, normalizeJid, validateJid,
     getSenderInfo, sharedLidPhoneCache, isLidUser, isPnUser,
     getBotJid, setBotMap
-} = require('@supernova/baileys')
+} = require('supernova-baileys')
 
 const jid = lidToJid('123456@lid')
 const { jid, lid } = resolveAll('5511999999999@s.whatsapp.net')
@@ -589,7 +589,7 @@ console.log('Cache size:', sharedLidPhoneCache.size)
 ## 10. Username (@usuario)
 
 ```js
-const { resolveUsername, isUsername } = require('@supernova/baileys')
+const { resolveUsername, isUsername } = require('supernova-baileys')
 
 isUsername('@josue')   // true
 const jid = await resolveUsername('@josue', sock.onWhatsApp.bind(sock))
@@ -601,7 +601,7 @@ if (jid) await sock.sendMessage(jid, { text: 'Olá!' })
 ## 11. MessageBuilder — Button, ButtonV2, Carousel, AIRich
 
 ```js
-const { Button, ButtonV2, Carousel, AIRich } = require('@supernova/baileys/lib/MB.cjs')
+const { Button, ButtonV2, Carousel, AIRich } = require('supernova-baileys/lib/MB.cjs')
 // O socket vai sempre no construtor: new ButtonV2(sock)
 ```
 
@@ -643,7 +643,7 @@ await msg.send(jid, { quoted: m })
 ```js
 const msg = new AIRich(sock)
 msg.addText('Acesse [Meu site](https://example.com).')
-msg.addCode('javascript', `require('@supernova/baileys')`)
+msg.addCode('javascript', `require('supernova-baileys')`)
 msg.addTable([['Comando', 'Desc'], ['!menu', 'Menu principal']])
 await msg.send(jid, { quoted: m })
 ```
@@ -745,14 +745,14 @@ sock.ev.on('call', (calls) => {
 ## 16. Utilitários
 
 ```js
-const { downloadMediaMessage } = require('@supernova/baileys')
+const { downloadMediaMessage } = require('supernova-baileys')
 const buffer = await downloadMediaMessage(message, 'buffer', {})
 
-const { generateWAMessage, generateWAMessageFromContent, generateMessageIDV2 } = require('@supernova/baileys')
-const { jidNormalizedUser, isJidGroup, isJidNewsletter, isLidUser, isPnUser } = require('@supernova/baileys')
+const { generateWAMessage, generateWAMessageFromContent, generateMessageIDV2 } = require('supernova-baileys')
+const { jidNormalizedUser, isJidGroup, isJidNewsletter, isLidUser, isPnUser } = require('supernova-baileys')
 
 // Detectar dispositivo — analisa o ID DA MENSAGEM, não o JID
-const { getDevice } = require('@supernova/baileys')
+const { getDevice } = require('supernova-baileys')
 const device = getDevice(message.key.id) // 'android' | 'ios' | 'web' | 'unknown'
 ```
 
@@ -770,7 +770,7 @@ await sock.sendMessage(jid, { pin: quotedMsg.key, type: 2 }) // UNPIN_FOR_ALL
 ## 18. Resolução de nomes (getName)
 
 ```js
-const { getName } = require('@supernova/baileys')
+const { getName } = require('supernova-baileys')
 const nome = getName(msg, contactStore)
 // Prioridade: contato salvo → verifiedName → pushName → @lid → telefone → "Usuário desconhecido"
 ```
@@ -791,7 +791,7 @@ A lib detecta a extensão real da fonte (não o `mimetype` declarado) e converte
 ## 20. Guard de pagamento stealth (anti-fraude)
 
 ```js
-const { bindPaymentGuard } = require('@supernova/baileys')
+const { bindPaymentGuard } = require('supernova-baileys')
 
 bindPaymentGuard(sock, {
     isPaymentMessage: (webMessage) => { /* sua lógica */ },
@@ -814,7 +814,7 @@ bindPaymentGuard(sock, {
 ## 21. Bad MAC Handler — sessões Signal
 
 ```js
-const { badMacHandler } = require('@supernova/baileys')
+const { badMacHandler } = require('supernova-baileys')
 
 if (badMacHandler.isBadMacError(error)) {
     badMacHandler.handleError(error, 'contexto')
@@ -827,7 +827,7 @@ badMacHandler.clearProblematicSessionFiles() // preserva creds.json
 ## 22. Resolução LID → telefone via grupo
 
 ```js
-const { resolveLidPhoneFromGroup } = require('@supernova/baileys')
+const { resolveLidPhoneFromGroup } = require('supernova-baileys')
 const telefone = await resolveLidPhoneFromGroup(sock, groupJid, lid)
 ```
 
@@ -838,7 +838,7 @@ Força resolução de `@lid` → telefone via `groupMetadata` — útil quando o
 ## 23. Versão do WhatsApp sempre atualizada
 
 ```js
-const { getBestWaVersion } = require('@supernova/baileys')
+const { getBestWaVersion } = require('supernova-baileys')
 const { version, isLatest, source } = await getBestWaVersion()
 // tenta web.whatsapp.com → GitHub → fallback fixo (avisando explicitamente)
 ```
@@ -850,7 +850,7 @@ const { version, isLatest, source } = await getBestWaVersion()
 > Requer `flow_id` aprovado no Meta Business Manager.
 
 ```js
-const { generateWAMessageFromContent } = require('@supernova/baileys')
+const { generateWAMessageFromContent } = require('supernova-baileys')
 
 const formMsg = generateWAMessageFromContent(jid, {
     viewOnceMessage: {
@@ -921,7 +921,7 @@ sock.ev.on('messages.upsert', async ({ messages }) => {
 Sistema de agendamento em memória. Auto-inicia o timer quando há mensagens na fila, auto-para quando a fila esvazia.
 
 ```js
-const { createMessageScheduler } = require('@supernova/baileys')
+const { createMessageScheduler } = require('supernova-baileys')
 
 const scheduler = createMessageScheduler(
     (jid, content) => sock.sendMessage(jid, content),
@@ -986,7 +986,7 @@ scheduler.clearAll()
 Posta conteúdo como status dentro de um grupo — texto, imagem, vídeo ou áudio. Suporta modo **Close Friends** (apenas amigos próximos), usando o mesmo mecanismo do status nativo do WhatsApp.
 
 ```js
-const { generateWAMessageFromContent, prepareWAMessageMedia, downloadMediaMessage } = require('@supernova/baileys')
+const { generateWAMessageFromContent, prepareWAMessageMedia, downloadMediaMessage } = require('supernova-baileys')
 const crypto = require('crypto')
 
 // ── Texto para todos do grupo ────────────────────────────────────────────────
@@ -1197,7 +1197,7 @@ Quando `isAvatar: true`, a lib injeta o EXIF de avatar no webp (os campos de nom
 ### Exemplo real — roubar figurinha e reenviar como avatar
 
 ```js
-const { downloadContentFromMessage } = require('@supernova/baileys')
+const { downloadContentFromMessage } = require('supernova-baileys')
 
 const stream = await downloadContentFromMessage(stickerMsg, 'sticker')
 let buffer = Buffer.from([])
@@ -1470,7 +1470,7 @@ Todo log de chamada passa pelo `logger` do próprio socket (o mesmo que você pa
 - **Auditoria e limpeza de código de terceiros.** Foram removidos: a conexão remota (signal stream) que seguia canais e reagia a mensagens por ordem de um servidor externo, o helper `channel-e` (seguir/reagir em massa com vários sockets), o método `sendPerplexity` (enviava o texto do usuário a um servidor externo), a constante `DONATE_URL`, o canal de newsletter fixo no código de eventos, metadados de newsletter falsos nos itens de álbum, links e créditos de terceiros, e o arquivo `messages-recv.js.bak`. O módulo interno `hzxx` virou `message-extras`.
 - `makeWASocket` não abre nenhuma conexão de rede além da conexão real com o WhatsApp.
 - Extração de thumbnail de vídeo usa `execFile` (sem interpolar caminho em comando de shell).
-- **Nova identidade: Supernova/baileys** (pacote `@supernova/baileys`, distribuído via GitHub), com créditos para [itz_d4m0cl3s](https://www.instagram.com/itz_d4m0cl3s/).
+- **Nova identidade: Supernova/baileys** (pacote `supernova-baileys`, distribuído via GitHub), com créditos para [itz_d4m0cl3s](https://www.instagram.com/itz_d4m0cl3s/).
 - **Chamadas de vídeo (H.264).** `sock.calls[callId].video` envia teste, imagem ou vídeo dentro da chamada (`start`, `stop`, `ativo`) e `extrairAudioPcm` prepara o áudio do arquivo pra tocar junto. Documentado na seção 29, com dumps de depuração (`CALL_RTP_DUMP`, `CALL_VIDEO_DUMP`).
 - Badge do Node corrigido pra `>=20`, que é o que o `engine-requirements.js` já exigia.
 
