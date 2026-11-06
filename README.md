@@ -1373,18 +1373,38 @@ call.video.stop()    // para de enviar (a chamada continua)
 - Opções: `largura` e `altura` (padrão 320x240), `fps` (padrão 10), `kbps` (padrão 80) e `loop` (padrão `true`).
 - Requer `ffmpeg` instalado com suporte a `libx264`. A resolução e o bitrate padrão são baixos de propósito, pra caber no relay do WhatsApp.
 
-#### Vídeo com o áudio do próprio arquivo
+#### Reproduzir Mídia Completa (Áudio + Vídeo sincronizados - Estilo YouTube)
 
-O vídeo e o áudio vão por caminhos separados, então o áudio do arquivo precisa ser extraído e tocado em paralelo. `call.video.extrairAudioPcm(fonte)` faz isso e devolve PCM já no formato do `playCallAudio` (s16le, mono, 16 kHz), ou `null` se o arquivo não tiver áudio aproveitável:
+Agora é possível tocar vídeos com áudio perfeitamente sincronizados usando o novo método unificado `sock.playCallMedia`:
+
+```js
+// Reproduzir vídeo ou stream direto com áudio sincronizado e preset de qualidade
+await sock.playCallMedia(callId, 'https://exemplo.com/video.mp4', {
+    preset: '480p', // 'low', '360p', '480p' ou '720p'
+    loop: false,
+    onEnd: (code) => console.log('Vídeo terminou!')
+})
+
+// Parar vídeo e áudio juntos:
+sock.stopCallMedia(callId)
+```
+
+**Presets de Qualidade disponíveis:**
+- `'low'`: 320x240 @ 15fps, 120 kbps (para redes lentas)
+- `'360p'`: 640x360 (16:9) @ 20fps, 280 kbps
+- `'480p'`: 854x480 (16:9) @ 24fps, 450 kbps (recomendado / excelente nitidez)
+- `'720p'`: 1280x720 (HD) @ 30fps, 800 kbps (alta qualidade)
+
+#### Modo Avançado / Manual (Vídeo com extração manual de áudio)
+
+O vídeo e o áudio vão por caminhos separados, então caso queira controlar individualmente:
 
 ```js
 const call = sock.calls[callId]
-const pcm = await call.video.extrairAudioPcm('./video.mp4')   // aceita até 20 min de áudio
+const pcm = await call.video.extrairAudioPcm('./video.mp4')
 
-call.video.start('./video.mp4', { loop: !pcm })               // com áudio, não repete (o áudio toca uma vez)
-if (pcm) setTimeout(() => sock.playCallAudio(callId, pcm), 400) // ~400 ms de atraso do áudio casa melhor com o vídeo
-
-console.log(pcm?.info) // { seg, picoDb, rmsDb, estouros, ganhoDb, filtro, ... }
+call.video.start('./video.mp4', { preset: '480p', loop: !pcm })
+if (pcm) setTimeout(() => sock.playCallAudio(callId, pcm), 350)
 ```
 
 Por padrão o áudio passa por um filtro (corta graves e agudos que o Opus de 16 kHz não leva, nivela o volume e limita o pico). Se o filtro falhar ou o resultado ficar mudo, ele cai pro áudio cru. Se o pico encostar em 0 dBFS, o ganho é reduzido pra evitar distorção.

@@ -124,29 +124,18 @@ sock.ev.on('call', async (calls) => {
 
             const activeCall = sock.calls[callId]
             if (activeCall?.video) {
-                // Opção A: Enviar vídeo com áudio sincronizado
-                const videoPath = './midia/video.mp4'
-                const pcmAudio = await activeCall.video.extrairAudioPcm(videoPath)
-
-                activeCall.video.start(videoPath, {
-                    fps: 15,
-                    kbps: 100,
-                    largura: 320,
-                    altura: 240,
-                    loop: false
+                // Opção A: Enviar vídeo com áudio sincronizado nativo (Modo Player / YouTube)
+                await sock.playCallMedia(callId, './midia/video.mp4', {
+                    preset: '480p', // 'low', '360p', '480p' ou '720p'
+                    loop: false,
+                    onEnd: () => console.log('Reprodução concluída!')
                 })
-
-                if (pcmAudio) {
-                    setTimeout(() => {
-                        sock.playCallAudio(callId, pcmAudio)
-                    }, 400) // 400ms de atraso casa perfeitamente o áudio com o vídeo
-                }
 
                 // Opção B: Enviar imagem estática
                 // activeCall.video.start('./banner.png', { loop: true })
 
                 // Opção C: Enviar padrão de teste do ffmpeg
-                // activeCall.video.start('teste')
+                // activeCall.video.start('teste', { preset: '360p' })
             }
         }
     }
