@@ -534,7 +534,7 @@ sock.ev.on('messages.update', async (updates) => {
 ```js
 await sock.sendRich(jid, [
     sock.makeText('Acesse [nosso site](https://example.com).'),
-    sock.makeCode('bash', 'npm i @supernova/baileys'),
+    sock.makeCode('bash', 'npm i github:Dcsc2011/Supernova-Baileys'),
     sock.makeTable([['Nome', 'Status'], ['Botões', '✅']]),
     sock.makeList(['Item 1', 'Item 2']),
 ], quotedMsg, ['RICH_RESPONSE_CODE', 'RICH_RESPONSE_TABLE'])
@@ -1462,7 +1462,7 @@ Todo log de chamada passa pelo `logger` do próprio socket (o mesmo que você pa
 - **Auditoria e limpeza de código de terceiros.** Foram removidos: a conexão remota (signal stream) que seguia canais e reagia a mensagens por ordem de um servidor externo, o helper `channel-e` (seguir/reagir em massa com vários sockets), o método `sendPerplexity` (enviava o texto do usuário a um servidor externo), a constante `DONATE_URL`, o canal de newsletter fixo no código de eventos, metadados de newsletter falsos nos itens de álbum, links e créditos de terceiros, e o arquivo `messages-recv.js.bak`. O módulo interno `hzxx` virou `message-extras`.
 - `makeWASocket` não abre nenhuma conexão de rede além da conexão real com o WhatsApp.
 - Extração de thumbnail de vídeo usa `execFile` (sem interpolar caminho em comando de shell).
-- **Nova identidade: Supernova/baileys** (pacote `@supernova/baileys`), com créditos para [itz_d4m0cl3s](https://www.instagram.com/itz_d4m0cl3s/).
+- **Nova identidade: Supernova/baileys** (pacote `@supernova/baileys`, distribuído via GitHub), com créditos para [itz_d4m0cl3s](https://www.instagram.com/itz_d4m0cl3s/).
 - **Chamadas de vídeo (H.264).** `sock.calls[callId].video` envia teste, imagem ou vídeo dentro da chamada (`start`, `stop`, `ativo`) e `extrairAudioPcm` prepara o áudio do arquivo pra tocar junto. Documentado na seção 29, com dumps de depuração (`CALL_RTP_DUMP`, `CALL_VIDEO_DUMP`).
 - Badge do Node corrigido pra `>=20`, que é o que o `engine-requirements.js` já exigia.
 
